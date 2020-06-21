@@ -28,6 +28,12 @@ PREFERRED_PROVIDER_virtual/kernel = "linux-dreambox"
 PREFERRED_PROVIDER_virtual/blindscan-dvbs = "dreambox-blindscan-utils"
 PREFERRED_PROVIDER_virtual/blindscan-dvbc = "dreambox-blindscan-utils"
 
+<<<<<<< HEAD
+=======
+PREFERRED_VERSION_kernel-module-88x2bu = "1.0.0.9"
+PREFERRED_VERSION_linux-dreambox = "3.2"
+
+>>>>>>> d11fbafb905ab68ccdfa0b04f8ad49547fd8970e
 KERNEL_IMAGETYPE = "vmlinux"
 KERNEL_OUTPUT = "${KERNEL_IMAGETYPE}"
 KERNEL_OUTPUT_DIR = "."

@@ -1,22 +1,24 @@
-SUMMARY = "Ralink 88x2BU v1.0.0.9"
+SUMMARY = "Ralink 8812AU / 8821AU v5.6.4.2"
 HOMEPAGE = "http://www.realtek.com.tw"
 SECTION = "kernel/modules"
 LICENSE = "GPLv2"
-LIC_FILES_CHKSUM = "file://LICENSE;md5=ffa10f40b98be2c2bc9608f56827ed23"
-
-# backward compatibility
-RPROVIDES_${PN} = "rtl8822bu"
+LIC_FILES_CHKSUM = "file://LICENSE;md5=b234ee4d69f5fce4486a80fdaf4a4263"
 
 inherit module
 
 PACKAGE_ARCH = "${MACHINE_ARCH}"
 
-SRC_URI = "file://rtl8822bu-driver-1.0.0.9-20180511a.zip"
+RREPLACES_${PN} = "kernel-module-8812au kernel-module-8814au"
+RCONFLICTS_${PN} = "kernel-module-8812au kernel-module-8814au"
 
-SRC_URI[md5sum] = "b5c5427f41422f0195b4947f28e877f8"
-SRC_URI[sha256sum] = "09e600076691d792c2827886972c509996007c5f6dc1afe92dd66fb9ee798864"
+SRC_URI = " \
+          git://github.com/aircrack-ng/rtl8812au.git;branch=v5.6.4.2 \
+          "
 
-S = "${WORKDIR}/rtl8822bu"
+SRC_URI[md5sum] = "0f36c65f154971c3b305a1705f9e500f"
+SRC_URI[sha256sum] = "e1ab86b4aca9ee599141d2d23dd5c989e0a6d004c8b87a487b370e80a4aba7e2"
+
+S = "${WORKDIR}/git"
 
 EXTRA_OEMAKE = "LINUX_SRC=${STAGING_KERNEL_DIR} KDIR=${STAGING_KERNEL_DIR}"
 
@@ -37,7 +39,7 @@ do_compile () {
 
 do_install() {
     install -d ${D}${nonarch_base_libdir}/modules/${KERNEL_VERSION}/kernel/drivers/net/wireless
-    install -m 0644 ${S}/88x2bu.ko ${D}${nonarch_base_libdir}/modules/${KERNEL_VERSION}/kernel/drivers/net/wireless
+    install -m 0644 ${S}/88XXau.ko ${D}${nonarch_base_libdir}/modules/${KERNEL_VERSION}/kernel/drivers/net/wireless
 
 }
 
