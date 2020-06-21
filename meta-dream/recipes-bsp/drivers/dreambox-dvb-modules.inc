@@ -3,16 +3,17 @@ SECTION = "base"
 LICENSE = "CLOSED"
 DEPENDS += "virtual/kernel"
 PRIORITY = "required"
-INC_PR = "r7"
+
+PACKAGE_ARCH = "${MACHINE_ARCH}"
 
 DREAMBOX_DVB_MODULES_MIRROR ?= "http://sources.dreamboxupdate.com/download/opendreambox/2.0.0/dreambox-dvb-modules"
 
 SRC_URI = " \
-			${DREAMBOX_DVB_MODULES_MIRROR}/dreambox-dvb-modules-${MACHINE}-${DM_LOCALVERSION}-${DRIVERDATE}.tar.bz2;name=modules \
+			${DREAMBOX_DVB_MODULES_MIRROR}/dreambox-dvb-modules-${MACHINE}-3.2-${MACHINE}-${DRIVERDATE}.tar.bz2;name=modules \
 			file://modules \
 "
 
-inherit module
+inherit module-base
 
 do_compile() {
 }
@@ -21,6 +22,7 @@ do_install() {
 	install -d ${D}${sysconfdir}/modules-load.d
 	install -m 0644 ${WORKDIR}/modules ${D}${sysconfdir}/modules-load.d/${PN}.conf
 	install -d ${D}/lib/modules/${DM_LOCALVERSION}/extra
+	install -m 0644 ${WORKDIR}/LICENSE ${D}/lib/modules/${DM_LOCALVERSION}/extra
 	install -m 0644 ${WORKDIR}/*.ko ${D}/lib/modules/${DM_LOCALVERSION}/extra
 }
 
@@ -35,4 +37,4 @@ DRIVERDATE = "${@'${PV}'.split('-')[-1]}"
 
 FILESEXTRAPATHS_prepend := "${THISDIR}/dreambox-dvb-modules:"
 
-FILES_${PN} += "${sysconfdir}/modules-load.d/${PN}.conf"
+FILES_${PN} += "${sysconfdir}/modules-load.d/${PN}.conf /lib/modules/${DM_LOCALVERSION}/extra"

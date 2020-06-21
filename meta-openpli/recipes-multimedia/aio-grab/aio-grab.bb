@@ -18,3 +18,5 @@ S = "${WORKDIR}/git"
 inherit autotools pkgconfig
 
 EXTRA_OECONF = "ac_cv_prog_c_openmp=-fopenmp"
+
+SRC_URI_dm900 = "${GITHUB_URI}/oe-alliance/${BPN}.git"

@@ -1,0 +1,11 @@
+diff -Naur meson-0.52.1/mesonbuild/envconfig.py meson-0.52.1-PersianPrince/mesonbuild/envconfig.py
+--- meson-0.52.1/mesonbuild/envconfig.py	2019-11-28 21:07:44.000000000 +0330
++++ meson-0.52.1-PersianPrince/mesonbuild/envconfig.py	2020-01-17 11:04:52.765821388 +0330
+@@ -52,6 +52,7 @@
+     'rl78',
+     'rx',
+     's390x',
++    'sh4',
+     'sparc',
+     'sparc64',
+     'wasm32',

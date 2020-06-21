@@ -1,4 +1,5 @@
 require openpli-image.bb
+require ../../recipes-core/package-index/package-index.bb
 
 WIFI_DRIVERS = " \
 	firmware-carl9170 \

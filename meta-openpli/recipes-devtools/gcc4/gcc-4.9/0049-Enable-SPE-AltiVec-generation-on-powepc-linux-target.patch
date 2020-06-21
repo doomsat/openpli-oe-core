@@ -1,0 +1,17 @@
+diff -Naur gcc-4.9.4/gcc/config.gcc gcc-4.9.4-PersianPrince/gcc/config.gcc
+--- gcc-4.9.4/gcc/config.gcc	2020-02-10 00:16:24.911168449 +0330
++++ gcc-4.9.4-PersianPrince/gcc/config.gcc	2020-02-10 00:17:38.443375083 +0330
+@@ -2268,7 +2268,12 @@
+ 	tmake_file="${tmake_file} rs6000/t-fprules rs6000/t-rtems rs6000/t-ppccomm"
+ 	;;
+ powerpc*-*-linux*)
+-	tm_file="${tm_file} dbxelf.h elfos.h freebsd-spec.h rs6000/sysv4.h"
++	case ${target} in
++	    powerpc*-*-linux*spe* | powerpc*-*-linux*altivec*)
++		tm_file="${tm_file} dbxelf.h elfos.h freebsd-spec.h rs6000/sysv4.h" ;;
++	    *)
++		tm_file="${tm_file} dbxelf.h elfos.h freebsd-spec.h rs6000/sysv4.h rs6000/linuxaltivec.h rs6000/linuxspe.h rs6000/e500.h" ;;
++	esac
+ 	extra_options="${extra_options} rs6000/sysv4.opt"
+ 	tmake_file="${tmake_file} rs6000/t-fprules rs6000/t-ppccomm"
+ 	extra_objs="$extra_objs rs6000-linux.o"

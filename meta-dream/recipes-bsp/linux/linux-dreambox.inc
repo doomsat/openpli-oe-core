@@ -1,10 +1,9 @@
-SUMMARY = "Linux Kernel"
+DESCRIPTION = "Linux kernel for ${MACHINE}"
 SECTION = "kernel"
 LICENSE = "GPLv2"
 LIC_FILES_CHKSUM = "file://COPYING;md5=d7810fab7487fb0aad327b76f1be7cd7"
-INC_PR = "19"
 
-inherit kernel siteinfo machine_kernel_pr
+inherit kernel machine_kernel_pr samba_change_dialect siteinfo
 
 PACKAGES_DYNAMIC = "kernel-*"
 
@@ -13,30 +12,28 @@ PACKAGES_DYNAMIC = "kernel-*"
 KERNEL_BUILTIN_MODULES = "kernel-module-block2mtd"
 
 KERNEL_BUILTIN_MODULES_dm8000 = "\
-	kernel-module-aes-generic \
-	kernel-module-block2mtd \
-	kernel-module-crc32c \
+	kernel-module-stv0299 \
+	"
+KERNEL_BUILTIN_MODULES_dm800se = "\
+	kernel-module-stv0299 \
+	"
+KERNEL_BUILTIN_MODULES_dm800sev2 = "\
+	kernel-module-stv0299 \
+	"
+KERNEL_BUILTIN_MODULES_dm7020hd = "\
 	kernel-module-fuse \
-	kernel-module-mac80211 \
-	kernel-module-cfg80211 \
-	kernel-module-ath \
-	kernel-module-ath5k \
-	kernel-module-sr-mod \
-	kernel-module-isofs \
-	kernel-module-udf \
 	kernel-module-stv0299 \
 	"
 
 # By default, kernel.bbclass modifies package names to allow multiple kernels
 # to be installed in parallel. We revert this change and rprovide the versioned
 # package names instead, to allow only one kernel to be installed.
-PKG_${KERNEL_PACKAGE_NAME}-base = "kernel-base"
-PKG_${KERNEL_PACKAGE_NAME}-image = "kernel-image"
-RPROVIDES_${KERNEL_PACKAGE_NAME}-base = "kernel-${KERNEL_VERSION}"
-RPROVIDES_${KERNEL_PACKAGE_NAME}-image = "kernel-image-${KERNEL_VERSION} ${KERNEL_BUILTIN_MODULES}"
+PKG_${KERNEL_PACKAGE_NAME}-base = "${KERNEL_PACKAGE_NAME}-base"
+PKG_${KERNEL_PACKAGE_NAME}-image = "${KERNEL_PACKAGE_NAME}-image"
+RPROVIDES_${KERNEL_PACKAGE_NAME}-base = "${KERNEL_PACKAGE_NAME}-${KERNEL_VERSION}"
+RPROVIDES_${KERNEL_PACKAGE_NAME}-image = "${KERNEL_PACKAGE_NAME}-image-${KERNEL_VERSION} ${KERNEL_BUILTIN_MODULES}"
 
 USB_ROOT = "/dev/sdb2"
-USB_ROOT_dm8000 = "/dev/sdf2"
 
 do_install_append() {
         ${STRIP} ${D}/${KERNEL_IMAGEDEST}/${KERNEL_IMAGETYPE}-${KERNEL_VERSION}
@@ -99,7 +96,7 @@ pkg_postrm_kernel () {
 
 CMDLINE_JFFS2 = "root=/dev/mtdblock3 rootfstype=jffs2 rw ${CMDLINE_CONSOLE}"
 CMDLINE_UBI = "ubi.mtd=root root=ubi0:rootfs rootfstype=ubifs rw ${CMDLINE_CONSOLE}"
-CMDLINE = "${CMDLINE_UBI}"
+CMDLINE = "${@bb.utils.contains('IMAGE_FSTYPES', 'ubifs', '${CMDLINE_UBI}', '${CMDLINE_JFFS2}', d)}"
 USB_CMDLINE = "root=${USB_ROOT} rootdelay=10 rw ${CMDLINE_CONSOLE}"
 
 LOCALVERSION = "-${MACHINE}"

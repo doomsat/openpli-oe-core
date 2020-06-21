@@ -5,15 +5,15 @@ PROVIDES += "virtual/bootloader"
 PRIORITY = "required"
 PACKAGE_ARCH = "${MACHINE_ARCH}"
 DEPENDS = "dreambox-buildimage-native"
-PR = "r20"
+DATE = "${@time.strftime('%Y%m%d',time.gmtime())}"
 
 inherit deploy
+
+do_configure[nostamp] = "1"
 
 SRC_URI = "http://sources.dreamboxupdate.com/download/7020/secondstage-${MACHINE}-${PV}.bin"
 
 PACKAGES = "${PN}"
-
-do_populate_sysroot[depends] = "dreambox-secondstage-${MACHINE}:do_package"
 
 S = "${WORKDIR}"
 
@@ -45,4 +45,5 @@ do_deploy() {
 	install -d ${DEPLOYDIR}
 	install -m 0644 secondstage-${MACHINE}-${PV}.bin ${DEPLOYDIR}/secondstage-${MACHINE}.bin
 }
+
 addtask deploy before do_package after do_install
