@@ -8,9 +8,9 @@ inherit gitpkgv autotools-brokensep pkgconfig
 PV = "1.0+git${SRCPV}"
 PKGV = "1.0+git${GITPKGV}"
 
-SRC_URI = "git://linuxtv.org/edid-decode.git"
-#SRC_URI[md5sum] = "47b54e49dd2681986e4cd0a372fa07c7"
-#SRC_URI[sha256sum] = "774480b40ee765a6210d123878cb94f85643ed7f34f816c3149d584b60ea86db"
+SRC_URI = "https://git.linuxtv.org/edid-decode.git;protocol=https"
+SRC_URI[md5sum] = "47b54e49dd2681986e4cd0a372fa07c7"
+SRC_URI[sha256sum] = "774480b40ee765a6210d123878cb94f85643ed7f34f816c3149d584b60ea86db"
 
 S = "${WORKDIR}/git" 
 
