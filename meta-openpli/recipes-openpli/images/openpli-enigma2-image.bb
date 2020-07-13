@@ -37,6 +37,7 @@ ENIGMA2_PLUGINS = " \
 	enigma2-plugin-extensions-openwebif \
 	enigma2-plugin-extensions-pictureplayer \
 	enigma2-plugin-extensions-ppanel \
+	enigma2-plugin-extensions-myscripts \
 	\
 	enigma2-plugin-systemplugins-fastscan \
 	enigma2-plugin-systemplugins-hotplug \
